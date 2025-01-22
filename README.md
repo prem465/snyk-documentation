@@ -218,3 +218,127 @@ Clarity: Use examples where necessary, such as explaining how fallback mechanism
 Confidence: Speak with assurance about the technical depth of the pipeline, emphasizing its impact on the organization’s processes.
 This detailed script will ensure that the audience leaves with a comprehensive understanding of the pipeline.
 
+
+---------------------------------------------------------
+
+
+Technical Script: Detailed Workflow of the Pipeline
+Introduction:
+This pipeline is designed to automate the deployment of Power BI reports and their corresponding semantic models to the UAT environment. It handles four key scenarios:
+
+Addition of both a report and its semantic model.
+Modification or addition of only a report.
+Reverting to a previous version of a report.
+Deleting a report from the UAT workspace.
+Each scenario is carefully orchestrated to ensure consistency, accuracy, and traceability across deployments. Let’s walk through each of these scenarios in detail using an example of sample.report.
+
+1. If Both Report and Semantic Model Are Added
+Scenario:
+sample.report and its corresponding sample.model are added in the Git repository. This might happen when a new report is created alongside a new semantic model.
+
+Workflow:
+
+Change Detection:
+
+The pipeline compares the current commit (HEAD) with the previous commit (HEAD~1).
+It identifies both sample.report and sample.model as added or modified.
+Folder Mapping:
+
+The pipeline maps the folders for both files to locate their paths.
+This ensures that the semantic model and report are correctly categorized.
+Importing Semantic Model:
+
+The semantic model (sample.model) is imported first because reports depend on its ID for linking.
+Once imported, the pipeline retrieves the model’s unique ID.
+Attaching Report to the Model:
+
+The report (sample.report) is imported and linked to the retrieved semantic model ID.
+This step ensures that the report is functionally connected to its data model.
+Deployment:
+
+Both items are deployed to the UAT workspace, completing the deployment for this scenario.
+2. If Only a Report Is Added or Modified
+Scenario:
+Only sample.report is updated or added in the Git repository. This often happens when a report requires changes but the semantic model remains untouched.
+
+Workflow:
+
+Change Detection:
+
+The pipeline identifies that only sample.report is added or modified.
+Semantic Model Retrieval:
+
+The pipeline searches for the corresponding semantic model in a systematic fallback process:
+Local Search: It checks if the model is available in the local repository.
+UAT Search (Exact Match): If not found locally, it searches the UAT workspace for an exact match by name.
+Base Name Match: As a last resort, it attempts to match the base name of the report with models in UAT.
+Linking and Deployment:
+
+Once the semantic model ID is retrieved, the report is linked to the model and deployed to the UAT workspace.
+Error Handling:
+
+If no corresponding semantic model is found, the pipeline halts and logs the issue for resolution.
+3. Reverting to a Previous Version of a Report
+Scenario:
+A previous version of sample.report needs to be redeployed due to errors or rollbacks.
+
+Workflow:
+
+Reverting Changes in Git:
+
+The pipeline retrieves the specific commit containing the desired version using git checkout or git revert.
+Removing Current Version:
+
+The current version of sample.report is removed from the UAT workspace to maintain consistency.
+Deploying Reverted Version:
+
+The reverted version of the report is redeployed and linked to the corresponding semantic model.
+Verification:
+
+The pipeline verifies that the reverted version is deployed correctly and logs the results.
+4. Deleting a Report
+Scenario:
+sample.report is marked for deletion in the Git repository. This might happen when a report is no longer needed.
+
+Workflow:
+
+Deletion Detection:
+
+The pipeline identifies the deletion of sample.report during the Git comparison.
+Processed Folder Check:
+
+The pipeline checks if the report’s folder is already marked as processed to avoid duplicate deletions.
+Removing the Report:
+
+It locates the report in the UAT workspace using its metadata and removes it using a Fabric API call.
+Final Cleanup:
+
+After deletion, the pipeline validates the workspace to ensure the report is no longer present.
+Key Technical Highlights of the Pipeline:
+Fallback Mechanism:
+Ensures that reports can be linked to their semantic models even if the models are not immediately available locally. It systematically checks local folders and the UAT workspace using exact and base name matches.
+
+Error Handling and Logging:
+Comprehensive logging ensures that every action is traceable, and errors are promptly reported for resolution.
+
+Automation:
+The entire process is automated, reducing manual intervention and minimizing errors during deployment, reverts, or deletions.
+
+Integration with Git:
+The use of Git ensures that all changes are version-controlled, and the pipeline dynamically adapts to detected changes.
+
+Example Scenario Summary
+Case 1: Adding Both Report and Model
+sample.report and sample.model are imported sequentially.
+The report is linked to the model and deployed to UAT.
+Case 2: Adding/Modifying Only the Report
+sample.report is added/modified.
+The pipeline finds the corresponding model using fallback mechanisms and links the report.
+Case 3: Reverting
+The current version of sample.report is removed from UAT.
+The reverted version is deployed and linked.
+Case 4: Deleting
+sample.report is detected as deleted.
+The pipeline removes the report from the UAT workspace.
+This detailed explanation covers the complete workflow of the pipeline for all possible scenarios, ensuring a clear and comprehensive understanding for all stakeholders.
+
