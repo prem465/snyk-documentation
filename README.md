@@ -342,3 +342,65 @@ sample.report is detected as deleted.
 The pipeline removes the report from the UAT workspace.
 This detailed explanation covers the complete workflow of the pipeline for all possible scenarios, ensuring a clear and comprehensive understanding for all stakeholders.
 
+-------------------------------------------------------------------------
+
+Title Slide
+Good [morning/afternoon], everyone. Today, I’ll walk you through the Power BI Deployment Pipeline, an automated framework designed to simplify and streamline the deployment of Power BI reports and semantic models. By the end of this presentation, you’ll have a clear understanding of its purpose, functionality, and technical details.
+
+Agenda
+We’ll start by discussing the purpose of the pipeline, then move on to its key features and a detailed flowchart of how it operates. After that, I’ll explain the key functions in the pipeline code, followed by its advantages. Finally, we’ll wrap up with a conclusion and take any questions you might have.
+
+Purpose of the Deployment Pipeline
+The deployment pipeline was created to address the manual and error-prone processes involved in deploying Power BI assets. It automates the deployment of Power BI reports and their linked semantic models to environments like UAT. This ensures all files are properly linked and handled, eliminating the risk of manual errors. The pipeline seamlessly supports scenarios where files are added, modified, or deleted, and it includes a fallback mechanism to handle edge cases where dependencies like semantic models may be missing. Ultimately, it enables faster and more reliable deployments.
+
+Key Features of the Pipeline
+The pipeline includes several features that ensure it operates efficiently and securely:
+
+Automated detection of changes: It uses Git to compare base and head commits to identify files that have been added, modified, or deleted.
+Add/modify logic: When reports or models are added, it links the reports to their corresponding semantic models, ensuring a functional deployment.
+Delete logic: It identifies deleted files and removes them from the UAT workspace via REST API calls.
+Fallback mechanism: For scenarios where a report lacks its associated model, the pipeline searches for the model locally or in the UAT workspace and links it automatically.
+Secure authentication: It uses service principal credentials to authenticate with Azure, Power BI, and OneLake securely.
+Comprehensive error handling: Every step is logged for traceability and debugging.
+Flowchart of the Pipeline
+Let’s look at how the pipeline functions through its flowchart:
+
+Authentication: The pipeline starts by authenticating with Azure, Fabric, and OneLake using service principal credentials.
+Change Detection: It identifies files added, modified, or deleted by comparing base and head commits in the Git repository.
+Processing Changes:
+If both the report and model are added, they are imported and linked.
+If only the report is added, the fallback mechanism searches for the model locally or in UAT and links it.
+If files are marked for deletion, the pipeline removes them from UAT using REST API calls.
+Finalization: Once all changes are processed, the pipeline validates and refreshes the UAT workspace.
+This logical structure ensures that every scenario—whether it’s adding, modifying, or deleting files—is handled seamlessly.
+
+lide 1: Key Functions in the Pipeline Code (Part 1)
+Talking Script:
+
+The pipeline starts with Authentication, which establishes secure connections to Azure, Power BI, and OneLake through an Azure Service Principal. This is achieved by passing credentials like client ID, client secret, and tenant ID to authenticate the pipeline securely. Without this, no operations like data import or deletion can proceed. It ensures compliance with enterprise-grade security standards.
+
+Next, we have Git Operations, a crucial step where the pipeline detects changes in the repository by comparing the base and head commits. This operation identifies which files have been added, modified, or deleted—specifically focusing on .pbix and .pbism files. This selective targeting minimizes unnecessary processing and ensures accurate handling of deployment changes.
+
+Finally, Import Logic deals with the addition or modification of semantic models and reports. It first imports the semantic model, retrieves its ID, and associates it with the corresponding report. This linking is crucial to maintaining the integrity of dependencies between models and reports, ensuring that deployed reports always function correctly in the target environment.
+
+Slide 2: Key Functions in the Pipeline Code (Part 2)
+Talking Script:
+
+The Fallback Mechanism is a robust feature designed to handle scenarios where a report is added or modified without its corresponding semantic model. The pipeline first checks for the model locally; if it finds it, it imports it and retrieves its ID. If not, it searches in the UAT workspace by matching file names. This ensures that all reports are linked to appropriate models, even if the model is missing from the current commit.
+
+Deletion Logic is another critical function, ensuring that deleted reports and models are cleaned up from the environment. This logic follows a systematic two-step approach: first, it tries an exact match for the file name. If no exact match is found, it falls back to a base name match, removing associated files cleanly while maintaining data integrity.
+
+Lastly, Error Handling is incorporated throughout the pipeline, providing detailed logs for every action. These logs not only offer transparency but also enable quick troubleshooting during failures, making the pipeline more resilient and efficient.
+Advantages
+The pipeline brings several advantages:
+
+It automates tedious processes, saving time and reducing manual effort.
+It ensures consistency in deployments across environments, minimizing errors.
+It provides robust handling of edge cases, such as missing models, through the fallback mechanism.
+It is secure and compliant with Azure, Power BI, and OneLake standards, ensuring data integrity and safety.
+The comprehensive error handling and logging improve visibility and traceability.
+Conclusion
+In summary, the Power BI Deployment Pipeline is an essential tool for our operations. It automates the deployment process, ensures reliability, and provides robust mechanisms to handle edge cases. Whether adding, modifying, or deleting files, the pipeline guarantees accuracy and consistency across environments. By eliminating manual errors and streamlining workflows, it saves time and enhances collaboration across teams.
+
+Thank you for your time. I’m happy to address any questions or dive deeper into any specific parts of the pipeline.
+
