@@ -558,3 +558,171 @@ Conclusion
 By following these practices, the DevOps team ensures a robust, efficient, and secure deployment process for Power BI reports and semantic models. These principles not only streamline the workflow but also align with industry standards to deliver high-quality solutions.
 Thank you for your time. I’m happy to address any questions or dive deeper into any specific parts of the pipeline.
 
+------------------------------------------------------------------------------------------------
+
+This document outlines the DevOps principles and best practices tailored to our pipeline workflow for handling Addition of Two Files (Report and Model), Report or Model Changes, Reverting a Report, and Deleting a Report. Each scenario focuses on maintaining efficiency, security, and traceability while adhering to industry standards.
+
+1. Addition of Two Files (Report and Model)
+Workflow Overview
+Both .pbix (report) and .pbism (model) files are added to the source control.
+Pipeline detects the changes, validates dependencies, and links the report to the semantic model.
+Files are promoted from development to UAT after approval.
+DevOps Principles and Practices
+Pull Requests (PRs):
+
+Raise a PR for adding both files.
+Ensure reviewers validate:
+Naming conventions for both files.
+Proper folder structure and file dependencies.
+Correct semantic model linkage in the pipeline.
+Branching Strategy:
+
+Use a dedicated feature branch for adding the new files.
+Ensure the branch is merged into the UAT branch after the PR is approved.
+Commit History:
+
+Use clear commit messages like:
+"Added Test.Report and Test.Model with semantic model linkage."
+Approvals:
+
+Approvals should include:
+DevOps engineers to validate the pipeline changes.
+Power BI developers to confirm report-model linkage.
+Testing:
+
+Perform validation in UAT to ensure the report renders correctly with the model.
+Logging and Monitoring:
+
+Enable detailed logs in the pipeline to track:
+File import status.
+Successful linkage between report and model.
+2. Report Changes or Model Changes
+Workflow Overview
+Changes in the report .pbix or model .pbism files trigger the pipeline.
+If a report changes, the pipeline ensures the corresponding model ID is retained.
+If a model changes, the updated model is imported and linked back to the existing reports.
+DevOps Principles and Practices
+Pull Requests (PRs):
+
+Always create a PR for modifications.
+Reviewers should verify:
+Impact of the changes on linked models or reports.
+Proper semantic model and report structure.
+Branching Strategy:
+
+Create a separate branch for each change.
+For example:
+feature/modify-report for report changes.
+feature/modify-model for model changes.
+Commit History:
+
+Example commit message:
+"Modified Test.Report to reflect updated business logic."
+"Updated Test.Model to include new calculated measures."
+Testing:
+
+Validate the modified report/model in UAT to ensure:
+No broken dependencies.
+Accurate data visualization.
+Approvals:
+
+Include Power BI developers and business analysts for functional validation.
+DevOps engineers ensure technical consistency.
+Rollback Strategy:
+
+Maintain the previous stable version in source control for rollback, if needed.
+Logging:
+
+Track all modifications in the pipeline logs for traceability.
+3. Reverting a Report
+Workflow Overview
+Reverting restores the previous version of a .pbix file.
+The pipeline links the reverted report to the correct semantic model using the fallback mechanism.
+DevOps Principles and Practices
+Pull Requests (PRs):
+
+Raise a PR with the reverted file.
+Include a detailed description specifying why the file is being reverted.
+Branching Strategy:
+
+Use a hotfix branch to manage revert operations.
+Example: hotfix/revert-test-report.
+Commit History:
+
+Use commit messages like:
+"Reverted Test.Report to previous version due to data inconsistencies."
+Fallback Mechanism:
+
+The pipeline searches locally or in UAT for the correct semantic model ID to relink.
+Approvals:
+
+Ensure approval from business stakeholders to confirm the revert aligns with business needs.
+Technical validation by DevOps engineers.
+Testing:
+
+Validate the reverted report in UAT to ensure it is functional and aligned with expectations.
+Error Handling:
+
+Enable pipeline logs to capture errors during the fallback process.
+4. Deleting a Report
+Workflow Overview
+Detects the deletion of a .pbix file.
+The pipeline checks for dependent files and removes the report using API calls.
+If a corresponding model is also marked for deletion, it ensures both files are handled.
+DevOps Principles and Practices
+Pull Requests (PRs):
+
+Create a PR with clear details on why the report is being deleted.
+Example: "Deleting Test.Report due to redundancy."
+Branching Strategy:
+
+Use a cleanup branch for deletion tasks.
+Example: cleanup/delete-test-report.
+Commit History:
+
+Use descriptive commit messages:
+"Deleted Test.Report and detached from Model A."
+Dependency Check:
+
+Review dependencies in the pipeline to confirm:
+No active references to the deleted report.
+No impact on related semantic models.
+Approval Workflow:
+
+Obtain approvals from:
+Business analysts to validate the removal aligns with business goals.
+Power BI developers to confirm there are no cascading impacts.
+Testing:
+
+Verify in UAT that the report is removed from the workspace and no dependent components are affected.
+Error Handling:
+
+If deletion fails (e.g., due to missing dependencies), logs should clearly indicate the reason.
+Logging:
+
+Maintain detailed logs for auditing and troubleshooting.
+General Practices for All Scenarios
+Security:
+
+Use Azure service principals for authentication.
+Store credentials securely in Azure Key Vault.
+Environment-Specific Configuration:
+
+Use separate endpoints for Dev and UAT.
+Ensure environment variables are correctly set.
+Monitoring:
+
+Implement Azure Monitor to track deployment health.
+Set up alerts for failures or anomalies.
+Documentation:
+
+Maintain detailed documentation for each deployment, including:
+PR details.
+Commit history.
+Testing results.
+Approvals.
+Retrospectives:
+
+Conduct post-deployment reviews to identify improvements.
+Conclusion
+By adhering to these DevOps principles and practices, we ensure a robust, efficient, and traceable deployment process for Power BI reports and semantic models. These practices minimize risks, maintain transparency, and align with industry standards.
