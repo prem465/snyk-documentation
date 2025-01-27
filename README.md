@@ -726,3 +726,17 @@ Retrospectives:
 Conduct post-deployment reviews to identify improvements.
 Conclusion
 By adhering to these DevOps principles and practices, we ensure a robust, efficient, and traceable deployment process for Power BI reports and semantic models. These practices minimize risks, maintain transparency, and align with industry standards.
+
+
+--------------------------------------------------------
+
+Slide Title: DevOps Practices in Deployment
+Content:
+
+Version Control: Git for managing reports and models.
+Branching Strategies: Feature, hotfix, and cleanup branches for structured workflows.
+Pull Requests: Peer-reviewed changes for quality assurance.
+Approval Process: Multi-level approvals for compliance and reliability.
+Rollback: Retain stable versions for easy recovery.
+Secure Authentication: Azure service principals and Key Vault for credentials.
+Automation: Combined pipeline for detecting and processing changes seamlessly.
