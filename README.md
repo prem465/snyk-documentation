@@ -1011,3 +1011,7 @@ One key advantage here is the seamless integration with the Fabric API, which al
 Another critical aspect of this stage is the built-in fallback mechanism. In case the semantic model is missing or not included in the commit, the pipeline intelligently searches for it locally first, and if not found, it looks in the UAT environment. This robust mechanism ensures no broken dependencies, maintaining a stable environment for further testing.
 
 Promoting to UAT is not just about moving files; it’s about ensuring a controlled and reliable deployment process that sets the stage for quality assurance and subsequent promotions."
+----------------------------------------------
+
+
+Once the pull request is approved, the developer reviews the files in the development environment to ensure everything is functioning as expected. After this initial verification, the pre-approval process is handled by the team lead. The team lead carefully reviews the reports and semantic models to validate their accuracy and alignment with the project requirements. Once the team lead provides their approval, the pipeline begins its execution to promote the files to the UAT environment."
