@@ -953,3 +953,37 @@ A pull request (PR) is raised, allowing for review and approval. Once the PR is 
 The pipeline waits for manual approval before proceeding. After the manual approval step, the reports and semantic models are successfully moved to the UAT workspace, making them available for validation and further testing.
 
 This workflow ensures controlled deployments, prevents unintended changes from propagating, and allows for quality assurance before finalizing updates. The diagram illustrates this flow, showing how the Power BI dataset is committed, pushed, and processed through the DevOps pipeline with approval stages for UAT deployment.
+
+
+
+Script for Demonstration of Report and Model Deployment Using the Pipeline
+Now that we have walked through the CI/CD pipeline workflow, I will demonstrate the actual process by deploying a new report and semantic model. This will give a clear picture of how our pipeline works in real-time.
+
+Step 1: Creating a Feature Branch
+Let’s say we have a new report and semantic model that need to be deployed.
+The first step is to create a feature branch from the develop branch.
+This ensures that the changes are isolated from the main branch and allows us to track modifications.
+Step 2: Uploading the Report and Semantic Model
+I will now upload the new report and semantic model to the feature branch.
+This step ensures that both files are properly tracked in Git and are version-controlled.
+Step 3: Creating a Pull Request (PR)
+Once the changes are made, I will create a Pull Request (PR) to merge the feature branch into develop.
+This triggers a review process, ensuring all modifications are validated before deployment.
+Step 4: Approving the Pull Request
+Now, the PR is sent for approval.
+Once the PR is approved, the report and semantic model are moved to the UAT workspace automatically.
+At this stage, the pipeline gets triggered automatically but does not proceed without manual approval.
+Step 5: Approving the Pipeline Execution
+The pipeline execution is currently on hold due to the pre-approval setup.
+I will now manually approve the pipeline, allowing it to proceed with the deployment.
+Once approved, the report and model are successfully moved to the UAT workspace.
+Step 6: Validating the Deployment
+Now that the pipeline has completed execution, let’s verify that the report and model are available in UAT.
+We can see that the files have been successfully deployed, confirming the process is working as expected.
+Conclusion
+This demonstration shows how our structured DevOps workflow ensures: ✔ Version control & tracking using Git
+✔ Approval-based deployment for controlled releases
+✔ Automated yet secure deployment with manual approvals
+✔ Seamless integration between Azure DevOps and Power BI
+
+With this approach, we maintain a secure, traceable, and efficient Power BI deployment process. Now, I will move on to the next example, demonstrating how modifications or deletions are handled in the pipeline.
