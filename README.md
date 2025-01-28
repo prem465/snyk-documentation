@@ -896,4 +896,51 @@ Logs confirm the successful removal of the report from UAT.
 Conclusion
 The Power BI Deployment Pipeline is a carefully designed system that adheres to DevOps principles, ensuring a streamlined and secure process for managing Power BI assets. By integrating automation, version control, fallback mechanisms, and secure authentication, this pipeline reduces errors, enhances collaboration, and provides a robust framework for deployment.
 
+-----------------------------------------------------------
+
+
+Slide 1: Title Slide – Power BI - CI/CD Pipeline Overview
+"Good [morning/afternoon], everyone. Today, I will be walking you through the Power BI CI/CD pipeline that we have implemented at Lakeview. This pipeline is designed to streamline the deployment process of Power BI reports and semantic models while ensuring best DevOps practices such as version control, automation, and structured deployment workflows. Throughout this presentation, I will cover the key aspects of our pipeline, the integration with Azure DevOps, and how we ensure seamless deployments with robust fallback mechanisms."
+
+Slide 2: Power BI Integration with Azure DevOps
+"The integration of Power BI with Azure DevOps enables us to automate report deployments while maintaining security and efficiency. As shown in the diagram, we leverage DevOps pipelines to manage Power BI reports and semantic models, ensuring structured deployments across multiple environments. The key advantage here is automation—whenever we make changes, those modifications are validated, reviewed, and deployed in a controlled manner. This reduces manual effort, enhances traceability, and ensures that our reports are always linked to the correct semantic models."
+
+Slide 3: Flowchart of the Pipeline
+"This flowchart provides a high-level view of our deployment pipeline. The process begins with authentication to ensure secure access. Next, the pipeline detects any changes in reports or semantic models. If both the report and semantic model are added or modified, they are directly deployed. However, if only a report is added or modified, our fallback mechanism ensures that it gets correctly linked to an existing semantic model. Finally, once all conditions are met, the deployment takes place, ensuring that the changes are pushed securely to the target environment."
+
+Slide 4: Key Functions in the Pipeline Code (Part 1)
+"Our pipeline follows a structured approach with several core functions.
+
+Authentication: We use Azure Service Principal to authenticate with Azure, Power BI, and OneLake, ensuring secure and compliant access.
+Git Operations: The pipeline tracks all changes—additions, modifications, and deletions—using Git version control, which allows us to maintain a clear commit history.
+Import Logic: When a new report or model is detected, it is first imported into the system and linked properly, ensuring that reports are associated with the correct semantic models before deployment."
+Slide 5: Key Functions in the Pipeline Code (Part 2)
+"In addition to authentication and import logic, we have three other critical mechanisms.
+
+Fallback Mechanism: If a report is modified without its corresponding semantic model, the pipeline searches locally first and, if not found, looks in the UAT environment to ensure correct linking.
+Deletion Logic: This ensures proper cleanup of reports and semantic models, following a structured two-step deletion process (exact match and base name match).
+Error Handling: We have detailed logging at every step, ensuring visibility and easy troubleshooting if any issues arise."
+Slide 6: CI/CD Pipeline Overview
+"This diagram illustrates the full CI/CD process. It begins with data sources feeding into Power BI Desktop, where reports and datasets are created. These are then pushed to Azure DevOps, where they undergo a structured pipeline process. We have approval gateways in place, ensuring that reports are validated in a test workspace before final deployment to production. This ensures controlled releases, reducing the risk of errors while maintaining transparency and accountability."
+
+Slide 7: DevOps Practices in Deployment
+"As a DevOps team, we follow industry best practices to ensure efficient and structured deployments.
+
+Version Control: Every change is tracked using Git, ensuring a detailed history of modifications.
+Branching Strategies: We implement feature and cleanup branches to isolate changes.
+Pull Requests & Approval Process: Every change undergoes a review process before merging to maintain high-quality standards.
+Rollback Mechanism: If an issue arises, we can quickly revert to a stable version.
+Secure Authentication: We enforce role-based access using Azure Service Principal.
+Automation: Our pipeline handles additions, modifications, and deletions automatically, reducing manual intervention."
+Slide 8: Advantages of the Deployment Pipeline
+"By implementing this structured approach, we achieve several key benefits:
+
+Automation reduces manual effort, increasing efficiency.
+Consistency across environments ensures smooth deployments.
+Reliable linking of reports and models minimizes errors.
+Robust error handling prevents issues and ensures seamless rollbacks.
+Security compliance with Azure and Power BI standards maintains data integrity."
+Slide 9: Conclusion
+"In summary, our CI/CD pipeline for Power BI deployment provides a structured, automated, and secure approach to managing reports and semantic models. By integrating with Azure DevOps, we ensure seamless collaboration, efficient deployments, and minimal risk of errors. The process not only saves time but also enforces best DevOps practices, making our deployment workflow more scalable and reliable."
+
 
