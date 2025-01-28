@@ -943,4 +943,7 @@ Security compliance with Azure and Power BI standards maintains data integrity."
 Slide 9: Conclusion
 "In summary, our CI/CD pipeline for Power BI deployment provides a structured, automated, and secure approach to managing reports and semantic models. By integrating with Azure DevOps, we ensure seamless collaboration, efficient deployments, and minimal risk of errors. The process not only saves time but also enforces best DevOps practices, making our deployment workflow more scalable and reliable."
 
+----------------------------------
 
+
+This slide represents our CI/CD pipeline for Power BI deployments, aligning with our workflow. Our process starts with Power BI reports and semantic models developed locally. These are pushed to Azure Repos, where Git tracks changes efficiently. The pipeline detects modifications, additions, or deletions and triggers the deployment process. The first deployment stage is the test workspace, where reports and models are validated. If only a report is added, the fallback mechanism links it to an existing semantic model. The pipeline ensures that all changes go through an approval process, requiring validation before they move forward. The deletion process follows a two-step cleanup mechanism, ensuring that reports and models are removed properly. Additionally, a rollback mechanism is in place to restore previous versions if necessary. With secure authentication, logging, and automation, this pipeline ensures a structured and efficient Power BI deployment process.
