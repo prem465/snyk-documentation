@@ -987,3 +987,27 @@ This demonstration shows how our structured DevOps workflow ensures: ✔ Version
 ✔ Seamless integration between Azure DevOps and Power BI
 
 With this approach, we maintain a secure, traceable, and efficient Power BI deployment process. Now, I will move on to the next example, demonstrating how modifications or deletions are handled in the pipeline.
+---------------------------------------------------------------
+
+
+During Installing Dependencies (2m 45s)
+"While the dependencies are being installed, let me walk you through the significance of this step in our pipeline.
+
+Installing dependencies is an essential part of ensuring that our pipeline runs smoothly without interruptions. Here, we are pulling and installing all the required modules and tools that the pipeline uses to interact with services like Azure, Power BI, and the Fabric platform. This includes modules like Az.Accounts for Azure authentication, MicrosoftPowerBIMgmt for handling Power BI tasks, and FabricPS-PBIP for seamless integration with Fabric APIs. Each of these modules plays a specific role in automating the pipeline process.
+
+For example, Az.Accounts allows us to authenticate securely with Azure using service principal credentials, which is crucial for all subsequent API calls and resource management. The MicrosoftPowerBIMgmt module is responsible for importing Power BI reports and managing workspace resources, and without this module, we wouldn't be able to automate the report or model import process.
+
+Additionally, Fabric-specific modules handle actions like importing semantic models and ensuring they are correctly linked with their corresponding reports. This eliminates any manual intervention, saving significant time and reducing human error.
+
+By automating this step, we ensure that every pipeline execution begins with a clean and consistent environment, free of any versioning issues or missing tools. This also helps maintain a standardized workflow across teams, especially when working in large, distributed environments.
+
+So, while this step takes some time, it ensures that all necessary components are in place for the rest of the pipeline to execute without any failures or inconsistencies."
+
+During Promoting to UAT (1m)
+"Now, as the pipeline promotes the files to UAT, let me explain the importance of this step. At this stage, the semantic model and report are being imported into the UAT environment. The pipeline is designed to handle any dependencies automatically, ensuring that the semantic model is correctly linked to its respective report. This ensures the integrity of the deployed files in the UAT environment.
+
+One key advantage here is the seamless integration with the Fabric API, which allows us to manage all resources programmatically. Whether it’s importing files, linking IDs, or validating the workspace, everything is automated. This significantly reduces manual intervention, ensures consistency across deployments, and minimizes the risk of errors.
+
+Another critical aspect of this stage is the built-in fallback mechanism. In case the semantic model is missing or not included in the commit, the pipeline intelligently searches for it locally first, and if not found, it looks in the UAT environment. This robust mechanism ensures no broken dependencies, maintaining a stable environment for further testing.
+
+Promoting to UAT is not just about moving files; it’s about ensuring a controlled and reliable deployment process that sets the stage for quality assurance and subsequent promotions."
