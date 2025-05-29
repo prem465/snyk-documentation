@@ -1,7 +1,16 @@
-- script: |
-    echo "Pipeline.Workspace: $(Pipeline.Workspace)"
-    echo "Checking artifact directory..."
-    ls -al $(Pipeline.Workspace)
-    echo "Checking inside pythonApp..."
-    ls -al $(Pipeline.Workspace)/pythonApp
-  displayName: "Debug: List pipeline workspace and artifact contents"
+ls -l /home/vsts/work/1/s/app.zip
+ls -l /home/vsts/work/1/a/app.zip
+ls -l /home/vsts/work/1/b/app.zip
+ls -l /home/vsts/work/1/build/app.zip
+ls -l /home/vsts/work/1/pythonApp/app.zip
+ls -l /home/vsts/work/1/a/pythonApp/app.zip
+ls -l /home/vsts/work/1/s/pythonApp/app.zip
+ls -l /home/vsts/work/1/build/pythonApp/app.zip
+ls -l $(Pipeline.Workspace)/pythonApp/app.zip
+ls -l $(Pipeline.Workspace)/app.zip
+ls -l /home/vsts/work/1/a/
+ls -l /home/vsts/work/1/s/
+ls -l /home/vsts/work/1/b/
+ls -l /home/vsts/work/1/build/
+ls -l /home/vsts/work/1/pythonApp/
+ls -l $(Pipeline.Workspace)/
